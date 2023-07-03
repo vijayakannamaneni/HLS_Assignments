@@ -57,7 +57,8 @@ switch(state )
 			  }
 		 	  counter_2 ++;
 		  }
-		 state= state_1 ;
+		state=state_1 ;
+
 	break;
 
 	case state_1:
@@ -88,36 +89,59 @@ switch(state )
        	 		   msg_len = msg_len + 8 ;
        	 	  }
        	 	 counter ++ ;
-
        	 }
        	else{
-				  for(int i=0;i<8;i++)
-				  {
-					   data[i]=data[i+8];
-				  }
-				  if(counter_1 < 1)
-				  {
-					  for(int i=0;i<3;i++)
-					  {
-					     	data[i+8]= 0 ;
-					     	msg_len ++ ;
-					  }
-					  counter_1 ++ ;
-				  }
-            }
-        for(int j=0;j<8;j++){
 
+       			if(msg_len == 8)
+       			{
+       				  for(int i=0;i<3;i++)
+       			      {
+       						data[i+8]= 0 ;
+       						msg_len ++ ;
+       				  }
+       		          for(int j=0;j<1;j++){
+       				      	if (data[counter_2] == 1)
+       				      	{
+       						     for (int i = 0; i < 4 ; i++)
+       						     {
+       						           data[i + counter_2 ] = data[i+counter_2] ^ gen_pol[i];
+       						     }
+       				     	}
+       					    counter_2 ++;
+       		          }
+       		          state=state_2;
+       			}
+       			else
+       			{
+				       for(int i=0;i<8;i++)
+				       {
+					   data[i]=data[i+8];
+				        }
+				        if(counter_1 < 1)
+				        {
+					         for(int i=0;i<3;i++)
+					         {
+					         	data[i+8]= 0 ;
+					         	msg_len ++ ;
+					         }
+					        counter_1 ++ ;
+				         }
+       			}
+
+            }
+        for(int j=0;j<8;j++)
+        {
 			if (data[count] == 1){
 
 				for (int i = 0; i < 4 ; i++)
 				{
 				data[i + count ] = data[i+count] ^ gen_pol[i];
 				}
-				//printf("%s\n",data.to_string(2).c_str());
+
 			}
 			count ++;
 
-			if(count == 8)
+			if(count == 8 )
 			{
 				count = 0 ;
 			}
